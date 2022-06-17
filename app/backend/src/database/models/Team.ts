@@ -23,27 +23,12 @@ Team.init({
 }, {
   sequelize: db,
   timestamps: false,
+  modelName: 'team',
   tableName: 'teams',
 });
 
-Team.hasMany(Match, {
-  foreignKey: 'id',
-  as: 'homeTeam',
-});
+Match.hasMany(Team, { foreignKey: 'id' });
 
-Team.hasMany(Match, {
-  foreignKey: 'id',
-  as: 'awayTeam',
-});
-
-Match.belongsTo(Team, {
-  foreignKey: 'homeTeam',
-  as: 'idHomeTeam',
-});
-
-Match.belongsTo(Team, {
-  foreignKey: 'awayTeam',
-  as: 'idAwayTeam',
-});
+Team.belongsTo(Match);
 
 export default Team;
