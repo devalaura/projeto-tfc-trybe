@@ -14,7 +14,7 @@ module.exports = {
         allowNull: false,
         field: 'home_team',
         references: {
-          model: 'team',
+          model: 'teams',
           key: 'id',
         },
         onUpdate: 'CASCADE',
@@ -30,7 +30,7 @@ module.exports = {
         allowNull: false,
         field: 'away_team',
         references: {
-          model: 'team',
+          model: 'teams',
           key: 'id',
         },
         onUpdate: 'CASCADE',
@@ -44,6 +44,7 @@ module.exports = {
       inProgress: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
+        field: 'in_progress',
       }
     });
   },
