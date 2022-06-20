@@ -14,7 +14,7 @@ export default class User {
     if (!correctPassword) throw new Error('user validation');
 
     const { id, username, role } = findUser;
-    const token = this.auth.generate(id, username);
+    const token = await this.auth.generate(id, username);
     return {
       user: {
         id,
