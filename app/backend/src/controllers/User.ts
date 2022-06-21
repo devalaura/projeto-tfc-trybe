@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import { stringify } from 'querystring';
 
 import UserService from '../services/User';
 
@@ -25,7 +24,7 @@ export default class User {
 
       const validateRole = await this.service.validateLogin(authorization);
 
-      return res.status(200).json(stringify(validateRole));
+      return res.status(200).json(JSON.stringify(validateRole));
     } catch (e) {
       return next(e);
     }
