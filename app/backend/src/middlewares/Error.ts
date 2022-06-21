@@ -8,6 +8,8 @@ export default function ErrorHandler(error: Error, _r: Request, res: Response, _
       return res.status(401).json({ message: 'Incorrect email or password' });
     } case 'no email or password': {
       return res.status(400).json({ message: 'All fields must be filled' });
+    } case 'invalid token': {
+      return res.status(400).json({ message: 'Authorization required' });
     }
     default: {
       console.log({ e: message });

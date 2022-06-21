@@ -20,8 +20,20 @@ export default class User {
         id,
         username,
         role,
+        email,
       },
       token,
     };
+  }
+
+  public async validateLogin(token: string) {
+    const validateToken = await this.auth.verify(token);
+    if (!validateToken) throw new Error('invalid token');
+
+    const { data } = validateToken;
+    const findUser = await UserModel.findOne({ where: { id: data?.id } });
+    if (!findUser) throw new Error('invalid token');
+
+    return findUser.role;
   }
 }
