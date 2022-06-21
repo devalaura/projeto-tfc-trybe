@@ -24,7 +24,7 @@ export default class User {
 
       const validateRole = await this.service.validateLogin(authorization);
 
-      return res.status(200).json(JSON.stringify(validateRole));
+      return res.status(200).json(validateRole);
     } catch (e) {
       return next(e);
     }
