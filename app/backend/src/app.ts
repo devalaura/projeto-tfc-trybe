@@ -2,6 +2,7 @@ import * as express from 'express';
 
 import ErrorHandler from './middlewares/Error';
 import LoginRouter from './routes/Login';
+import TeamRouter from './routes/Team';
 
 class App {
   public app: express.Express;
@@ -22,6 +23,7 @@ class App {
     this.app.use(accessControl);
     this.app.use(express.json());
     this.app.use('/login', LoginRouter);
+    this.app.use('/teams', TeamRouter);
     this.app.use(ErrorHandler);
   }
 
