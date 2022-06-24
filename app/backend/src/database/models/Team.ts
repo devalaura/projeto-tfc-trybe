@@ -27,8 +27,8 @@ Team.init({
   tableName: 'teams',
 });
 
-Match.hasMany(Team, { foreignKey: 'id' });
+Team.hasMany(Match, { foreignKey: 'id' });
 
-Team.belongsTo(Match);
+Match.belongsTo(Team);
 
 export default Team;
