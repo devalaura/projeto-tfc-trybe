@@ -18,6 +18,14 @@ export default class Match {
     return this.returnMatches;
   }
 
+  public async getById(id: number) {
+    const findMatch = await MatchModel.findByPk(id);
+    if (!findMatch) throw new Error('invalid id match');
+
+    this.returnMatches = findMatch;
+    return this.returnMatches;
+  }
+
   public async filterMatches(inProgress: boolean | undefined) {
     const findMatches = await MatchModel.findAll({
       where: {
@@ -48,5 +56,18 @@ export default class Match {
     this.returnMatches = match;
 
     return this.returnMatches;
+  }
+
+  public async finishMatch(id: number) {
+    const findMatch = await this.getById(id);
+    if (findMatch.inProgress === false) throw new Error('match already finished');
+
+    await MatchModel.update({ inProgress: false }, {
+      where: {
+        id,
+      },
+    });
+
+    return 'Finished';
   }
 }

@@ -10,5 +10,10 @@ const controller = new MatchController();
 
 router.post('/', uController.validateAuth.bind(uController), controller.create.bind(controller));
 router.get('/', controller.getAll.bind(controller));
+router.patch(
+  '/:id/finish',
+  uController.validateAuth.bind(uController),
+  controller.finishMatch.bind(controller),
+);
 
 export default router;
