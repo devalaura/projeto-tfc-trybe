@@ -49,6 +49,10 @@ export default class Match {
     homeTeamGoals: number,
     awayTeamGoals: number,
   ) {
+    const findHomeTeam = await TeamModel.findByPk(homeTeam);
+    const findAwayTeam = await TeamModel.findByPk(awayTeam);
+    if (!findHomeTeam || !findAwayTeam) throw new Error('no teams');
+
     const match = await MatchModel.create({
       homeTeam, homeTeamGoals, awayTeam, awayTeamGoals, inProgress: true,
     });

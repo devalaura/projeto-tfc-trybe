@@ -8,12 +8,11 @@ export default function ErrorHandler(error: Error, _r: Request, res: Response, _
       return res.status(401).json({ message: 'Incorrect email or password' });
     } case 'no email or password': {
       return res.status(400).json({ message: 'All fields must be filled' });
-    } case 'invalid token': {
-      return res.status(400).json({ message: 'Authorization required' });
-    } case 'invalid id match': {
-      return res.status(400).json({ message: 'Match Id not find' });
-    } case 'match already finished': {
-      return res.status(400).json({ message: 'Match already finished' });
+    } case 'equal teams': {
+      return res.status(401)
+        .json({ message: 'It is not possible to create a match with two equal teams' });
+    } case 'no teams': {
+      return res.status(404).json({ message: 'There is no team with such id!' });
     }
     default: {
       console.log({ e: message });
