@@ -17,4 +17,21 @@ export default class Match {
     this.returnMatches = findMatches;
     return this.returnMatches;
   }
+
+  public async filterMatches(inProgress: boolean | undefined) {
+    const findMatches = await MatchModel.findAll({
+      where: {
+        inProgress,
+      },
+      attributes: { exclude: ['home_team', 'away_team'] },
+      include: [
+        { model: TeamModel, as: 'teamHome', attributes: { exclude: ['id'] } },
+        { model: TeamModel, as: 'teamAway', attributes: { exclude: ['id'] } },
+      ],
+    });
+
+    this.returnMatches = findMatches;
+
+    return this.returnMatches;
+  }
 }
