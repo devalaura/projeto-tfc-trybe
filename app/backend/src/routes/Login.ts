@@ -8,6 +8,6 @@ const router = Router();
 const controller = new LoginController();
 
 router.post('/', LoginValidation, controller.login.bind(controller));
-router.get('/validate', controller.validateLogin.bind(controller));
+router.get('/validate', controller.validateAuth.bind(controller));
 
 export default router;
