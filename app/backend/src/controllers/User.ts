@@ -17,14 +17,17 @@ export default class User {
     }
   }
 
-  public async validateLogin(req: Request, res: Response, next: NextFunction) {
+  public async validateAuth(req: Request, res: Response, next: NextFunction) {
     try {
       const { authorization } = req.headers;
       if (!authorization) throw new Error('invalid token');
 
-      const validateRole = await this.service.validateLogin(authorization);
+      const validateRole = await this.service.validateAuth(authorization);
 
-      return res.status(200).json(validateRole);
+      const { homeTeam, awayTeam } = req.body;
+      if (!homeTeam && !awayTeam) return res.status(200).json(validateRole);
+
+      return next();
     } catch (e) {
       return next(e);
     }

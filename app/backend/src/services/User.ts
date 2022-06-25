@@ -26,7 +26,7 @@ export default class User {
     };
   }
 
-  public async validateLogin(token: string) {
+  public async validateAuth(token: string) {
     const validateToken = await this.auth.verify(token);
     if (!validateToken) throw new Error('invalid token');
 
