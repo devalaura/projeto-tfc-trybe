@@ -20,5 +20,6 @@ router.patch(
   '/:id/finish',
   controller.finishMatch.bind(controller),
 );
+router.patch('/:id', controller.update.bind(controller));
 
 export default router;

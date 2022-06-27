@@ -74,4 +74,17 @@ export default class Match {
 
     return 'Finished';
   }
+
+  public async update(id: number, homeTeamGoals: number, awayTeamGoals: number) {
+    const findMatch = await this.getById(id);
+    if (findMatch.inProgress === false) throw new Error('match already finished');
+
+    await MatchModel.update({ homeTeamGoals, awayTeamGoals }, {
+      where: {
+        id,
+      },
+    });
+
+    return 'Updated';
+  }
 }

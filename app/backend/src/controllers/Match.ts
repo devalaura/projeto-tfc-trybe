@@ -49,4 +49,17 @@ export default class Match {
       return next(e);
     }
   }
+
+  public async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const { homeTeamGoals, awayTeamGoals } = req.body;
+
+      const message = await this.service.update(Number(id), homeTeamGoals, awayTeamGoals);
+
+      return res.status(200).json({ message });
+    } catch (e) {
+      return next(e);
+    }
+  }
 }
