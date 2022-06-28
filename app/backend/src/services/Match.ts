@@ -1,6 +1,8 @@
 import MatchModel from '../database/models/Match';
 import TeamModel from '../database/models/Team';
 import IMatch from '../interfaces/Match';
+import ILeaderboard from '../interfaces/Leaderboard';
+import { getVictory, getTie, getLoss } from '../schemas/Match';
 
 export default class Match {
   public returnMatches: IMatch[] | IMatch;
@@ -86,5 +88,26 @@ export default class Match {
     });
 
     return 'Updated';
+  }
+
+  public async getScoreBoard() {
+    let results: ILeaderboard;
+    const findMatch = await this.getAll();
+    const setResults = findMatch.map(({ homeTeamGoals, awayTeamGoals, teamHome, teamAway }) => {
+      if (teamHome && teamAway && homeTeamGoals > awayTeamGoals) {
+        const victory = getVictory(homeTeamGoals, awayTeamGoals, teamHome.teamName);
+        const loss = getLoss(awayTeamGoals, homeTeamGoals, teamAway.teamName);
+        results = { ...results, ...victory, ...loss };
+      } if (teamAway && teamHome && homeTeamGoals < awayTeamGoals) {
+        const loss = getLoss(homeTeamGoals, awayTeamGoals, teamHome.teamName);
+        const victory = getVictory(awayTeamGoals, homeTeamGoals, teamAway.teamName);
+        results = { ...results, ...victory, ...loss };
+      } if (teamAway && teamHome && homeTeamGoals === awayTeamGoals) {
+        const tieHome = getTie(homeTeamGoals, awayTeamGoals, teamHome.teamName);
+        const tieAway = getTie(awayTeamGoals, homeTeamGoals, teamAway.teamName);
+        results = { ...results, ...tieHome, ...tieAway };
+      } return results;
+    });
+    return setResults;
   }
 }
