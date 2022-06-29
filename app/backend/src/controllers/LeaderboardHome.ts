@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 
-import LeaderboardService from '../services/Leaderboard';
+import LeaderboardService from '../services/LeaderboardHome';
 
 export default class Leaderboard {
   constructor(public service = new LeaderboardService()) { }
 
-  public async getAll(req: Request, res: Response, next: NextFunction) {
+  public async getAll(_req: Request, res: Response, next: NextFunction) {
     try {
       const findMatches = await this.service.getAll();
 
