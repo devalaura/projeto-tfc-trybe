@@ -1,14 +1,10 @@
-import LeaderboardHome from './LeaderboardHome';
-import LeaderboardAway from './LeaderboardAway';
+import LeaderboardSchema from '../schemas/Leaderboard';
 
 export default class Leaderboard {
-  constructor(public sLHome = new LeaderboardHome(), public sLAway = new LeaderboardAway()) { }
+  constructor(public schema = new LeaderboardSchema()) { }
 
   public async getAll() {
-    const findBoardHome = await this.sLHome.getAll();
-    const findBoardAway = await this.sLAway.getAll();
-
-    const result = [...findBoardHome, ...findBoardAway];
+    const result = await this.schema.getAll();
 
     return result.sort((a, b) => ((b.totalPoints - a.totalPoints)
     || (b.totalVictories - a.totalVictories) || (b.goalsBalance - a.goalsBalance)
