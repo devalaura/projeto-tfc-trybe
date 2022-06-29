@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 
-import LeaderboardService from '../services/LeaderboardHome';
+import LeaderboardService from '../services/LeaderboardAway';
 
-export default class LeaderboardHome {
+export default class LeaderboardAway {
   constructor(public service = new LeaderboardService()) { }
 
   public async getAll(_req: Request, res: Response, next: NextFunction) {

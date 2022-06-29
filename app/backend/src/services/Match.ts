@@ -88,9 +88,20 @@ export default class Match {
     return 'Updated';
   }
 
-  public async getLeaderboardMatches(id: number) {
+  public async getLeaderboardHomeMatches(id: number) {
     const findMatches = await MatchModel.findAll({ where: {
       homeTeam: id,
+      inProgress: false,
+    },
+    });
+
+    this.returnMatches = findMatches;
+    return this.returnMatches;
+  }
+
+  public async getLeaderboardAwayMatches(id: number) {
+    const findMatches = await MatchModel.findAll({ where: {
+      awayTeam: id,
       inProgress: false,
     },
     });

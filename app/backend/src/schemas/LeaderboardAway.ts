@@ -3,15 +3,15 @@ import Team from '../services/Team';
 import IMatch from '../interfaces/Match';
 import ILeaderboard from '../interfaces/Leaderboard';
 
-export default class LeaderboardHome {
+export default class LeaderboardAway {
   constructor(public sMatch = new Match(), public sTeam = new Team()) { }
 
   public async getAll() {
     const findTeams = await this.sTeam.getAll();
     const findMatches = findTeams.map(async ({ teamName, id }) => {
-      const matchesBoard = await this.sMatch.getLeaderboardHomeMatches(id);
+      const matchesBoard = await this.sMatch.getLeaderboardAwayMatches(id);
 
-      return LeaderboardHome.getBoard(teamName, matchesBoard);
+      return LeaderboardAway.getBoard(teamName, matchesBoard);
     });
     const setBoard = await Promise.all(findMatches);
     return setBoard;
@@ -19,7 +19,7 @@ export default class LeaderboardHome {
 
   static getVictories(matches: IMatch[]) {
     const getVictories = matches.reduce((acc, match) => (
-      match.homeTeamGoals > match.awayTeamGoals ? acc + 1 : acc
+      match.awayTeamGoals > match.homeTeamGoals ? acc + 1 : acc
     ), 0);
 
     return { totalVictories: getVictories };
@@ -35,7 +35,7 @@ export default class LeaderboardHome {
 
   static getLosses(matches: IMatch[]) {
     const getLosses = matches.reduce((acc, match) => (
-      match.awayTeamGoals > match.homeTeamGoals ? acc + 1 : acc
+      match.homeTeamGoals > match.awayTeamGoals ? acc + 1 : acc
     ), 0);
 
     return { totalLosses: getLosses };
@@ -43,11 +43,11 @@ export default class LeaderboardHome {
 
   static getGoals(matches: IMatch[]) {
     const getFavorGoals = matches.reduce((acc, match) => (
-      match.homeTeamGoals ? acc + match.homeTeamGoals : acc
+      match.awayTeamGoals ? acc + match.awayTeamGoals : acc
     ), 0);
 
     const getOwnGoals = matches.reduce((acc, match) => (
-      match.awayTeamGoals ? acc + match.awayTeamGoals : acc
+      match.homeTeamGoals ? acc + match.homeTeamGoals : acc
     ), 0);
 
     const getGoalsBalance = getFavorGoals - getOwnGoals;
