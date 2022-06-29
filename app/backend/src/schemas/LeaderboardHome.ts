@@ -62,7 +62,9 @@ export default class LeaderboardHome {
     const points = (victories.totalVictories * 3) + ties.totalDraws;
     const games = (victories.totalVictories + losses.totalLosses + ties.totalDraws);
     const goals = this.getGoals(matches);
-    const efficiency = (points / (games * 100));
+    // Referência para arredondar o número para 2 casas decimais:
+    // https://metring.com.br/arredondar-numero-em-javascript#:~:text=Para%20arredondar%20um%20n%C3%BAmero%20decimal,n%C3%A3o%20%C3%A9%20um%20m%C3%A9todo%20confi%C3%A1vel.
+    const efficiency = +(parseFloat(((points / (games * 3)) * 100).toString()).toFixed(2));
 
     return {
       name: teamName,

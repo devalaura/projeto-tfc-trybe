@@ -6,6 +6,6 @@ export default class LeaderboardHome {
   public async getAll() {
     const leaderboard = await this.schema.getAll();
 
-    return leaderboard;
+    return leaderboard.sort((a, b) => (b.totalPoints - a.totalPoints));
   }
 }
